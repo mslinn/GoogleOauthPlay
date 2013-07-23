@@ -1,0 +1,13 @@
+client_secrets.json
+logs
+.classpath
+*~
+.cache
+.idea/
+.idea_modules/
+.project
+.settings/
+*.iml
+*.stackdump
+project/target/
+target/
