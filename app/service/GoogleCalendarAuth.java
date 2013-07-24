@@ -56,7 +56,7 @@ import java.security.Signature;
  * This code is not supported by Google */
 public class GoogleCalendarAuth {
     private final String SCOPE = "https://www.googleapis.com/auth/calendar" + " " + "https://www.googleapis.com/auth/structuredcontent";
-    private  String jwt_header = "{\"alg\":\"RS256\",\"typ\":\"JWT\"}";
+    private final String jwt_header = "{\"alg\":\"RS256\",\"typ\":\"JWT\"}";
     private String access_token = null;
 
     public static void main(String[] args) {
@@ -75,47 +75,48 @@ public class GoogleCalendarAuth {
             System.exit(-1);
         }
 
-        GoogleCalendarAuth j = new GoogleCalendarAuth(client_id, key);
+        final GoogleCalendarAuth j = new GoogleCalendarAuth(client_id, key);
     }
 
     public GoogleCalendarAuth(String client_id, String key) {
         try {
-            long now = System.currentTimeMillis() / 1000L;
-            long exp = now + 3600;
-            String claim = "{\"iss\":\"" + client_id + "\",\"scope\":\"" + SCOPE + "\",\"aud\":\"https://accounts.google.com/o/oauth2/token\",\"exp\":" + exp + ",\"iat\":" + now + "}";
+            final long now = System.currentTimeMillis() / 1000L;
+            final long exp = now + 3600;
+            final String claim = "{\"iss\":\"" + client_id + "\",\"scope\":\"" + SCOPE + "\",\"aud\":\"https://accounts.google.com/o/oauth2/token\",\"exp\":" + exp + ",\"iat\":" + now + "}";
 
-            String jwt = Base64.encodeBase64URLSafeString(jwt_header.getBytes()) + "." + Base64.encodeBase64URLSafeString(claim.getBytes("UTF-8"));
+            final String jwt = Base64.encodeBase64URLSafeString(jwt_header.getBytes()) + "." + Base64.encodeBase64URLSafeString(claim.getBytes("UTF-8"));
 
-            byte[] jwt_data = jwt.getBytes("UTF8");
+            final byte[] jwt_data = jwt.getBytes("UTF8");
 
-            Signature sig = Signature.getInstance("SHA256WithRSA");
+            final Signature sig = Signature.getInstance("SHA256WithRSA");
 
-            KeyStore ks = java.security.KeyStore.getInstance("PKCS12");
+            final KeyStore ks = java.security.KeyStore.getInstance("PKCS12");
             ks.load(new FileInputStream(key), "notasecret".toCharArray());
 
             sig.initSign((PrivateKey) ks.getKey("privatekey", "notasecret".toCharArray()));
             sig.update(jwt_data);
-            byte[] signatureBytes = sig.sign();
-            String b64sig = Base64.encodeBase64URLSafeString(signatureBytes);
+            final byte[] signatureBytes = sig.sign();
+            final String b64sig = Base64.encodeBase64URLSafeString(signatureBytes);
 
-            String assertion = jwt + "." + b64sig;
+            final String assertion = jwt + "." + b64sig;
 
             //System.out.println("Assertion: " + assertion);
 
-            String data = "grant_type=assertion";
-            data += "&" + "assertion_type" + "=" + URLEncoder.encode("http://oauth.net/grant_type/jwt/1.0/bearer", "UTF-8");
-            data += "&" + "assertion=" + URLEncoder.encode(assertion, "UTF-8");
+            final String data = "grant_type=assertion" +
+               "&" + "assertion_type" + "=" + URLEncoder.encode("http://oauth.net/grant_type/jwt/1.0/bearer", "UTF-8") +
+               "&" + "assertion=" + URLEncoder.encode(assertion, "UTF-8");
 
             // Make the Access Token Request
             URLConnection conn = null;
             try {
-                URL url = new URL("https://accounts.google.com/o/oauth2/token");
+                final URL url = new URL("https://accounts.google.com/o/oauth2/token");
                 conn = url.openConnection();
                 conn.setDoOutput(true);
                 OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
                 wr.write(data);
                 wr.flush();
 
+                /* java.io.IOException: Server returned HTTP response code: 400 for URL: https://accounts.google.com/o/oauth2/token */
                 BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 String line;
                 while ((line = rd.readLine()) != null) {
@@ -127,15 +128,15 @@ public class GoogleCalendarAuth {
                 wr.close();
                 rd.close();
             } catch (Exception ex) {
-                InputStream error = ((HttpURLConnection) conn).getErrorStream();
-                BufferedReader br = new BufferedReader(new InputStreamReader(error));
+                final InputStream error = ((HttpURLConnection) conn).getErrorStream();
+                final BufferedReader br = new BufferedReader(new InputStreamReader(error));
                 StringBuilder sb = new StringBuilder();
                 String line;
                 while ((line = br.readLine()) != null)
                     sb.append(line);
                 System.out.println("Error: " + ex + "\n " + sb.toString());
             }
-            //System.out.println(access_token);
+            System.out.println("access_token=" + access_token);
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
