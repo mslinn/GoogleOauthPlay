@@ -4,17 +4,6 @@
 
 [See documentation](https://code.google.com/p/gcs-admin-toolkit/wiki/GCSAuthentication)
 
-Run as a console app this way:
-
-    $ sbt 'run-main service.GoogleCalendarAuth --key=MyPKCS12 --client_id=CLIENT_ID'
-
-where:
-
- - `MyPKCS12` is a PKCS12 keystore file.
- - `CLIENT_ID` is the assigned Google client ID.
-
-
-## Run as a Play app ##
 [Read Google's docs on how this works.](https://developers.google.com/accounts/docs/OAuth2#serviceaccount) and also
 [Java API docs on Service Accounts](https://code.google.com/p/google-api-java-client/wiki/OAuth2#Service_Accounts).
 
@@ -35,11 +24,21 @@ where:
 
   e. Should We **Enable notification endpoints**???
 
-### Run as a Local Play app ###
+## Run as a console app ##
+
+    $ sbt 'run-main service.GoogleCalendarAuth --key=googleKey.p12 --client_id=CLIENT_ID'
+
+where:
+
+ - `googleKey.p12` is a PKCS12 keystore file generated as described in the previous section.
+ - `CLIENT_ID` is the assigned Google client ID from the the previous section.
+
+
+## Run as a Local Play app ##
  2. Set environment variables for the key and client id shown on the same Google API page:
 
     `export GOOGLE_APP_KEY=blahblahblah`
-    
+
     `export GOOGLE_CLIENT_ID=123456.apps.googleusercontent.com`
 
  3. Run Play:
@@ -47,7 +46,7 @@ where:
     `$ play debug run`
 
 
-### Run as a Play app on Heroku ###
+## Run as a Play app on Heroku ##
 
  2. Set environment variables for the key and client id shown on the same Google API page:
 
