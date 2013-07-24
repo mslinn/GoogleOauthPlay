@@ -18,6 +18,7 @@ package service;
 import org.apache.commons.codec.binary.Base64;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -55,7 +56,7 @@ import java.security.Signature;
  * <p/>
  * This code is not supported by Google */
 public class GoogleCalendarAuth {
-    private final String SCOPE = "https://www.googleapis.com/auth/calendar" + " " + "https://www.googleapis.com/auth/structuredcontent";
+    private final String SCOPE = "https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/structuredcontent";
     private final String jwt_header = "{\"alg\":\"RS256\",\"typ\":\"JWT\"}";
     private String access_token = null;
 
@@ -75,19 +76,27 @@ public class GoogleCalendarAuth {
             System.exit(-1);
         }
 
+        File keyFile = new File(key);
+        if (!keyFile.exists()) {
+            System.out.println("Error: " + key + " does not exist.");
+            System.exit(-2);
+        }
+
+        if (!keyFile.canRead()) {
+            System.out.println("Error: " + key + " cannot be read.");
+            System.exit(-3);
+        }
+
         final GoogleCalendarAuth j = new GoogleCalendarAuth(client_id, key);
     }
 
     public GoogleCalendarAuth(String client_id, String key) {
+        final long now = System.currentTimeMillis() / 1000L;
+        final long exp = now + 3600;
+        final String claim = "{\"iss\":\"" + client_id + "\",\"scope\":\"" + SCOPE + "\",\"aud\":\"https://accounts.google.com/o/oauth2/token\",\"exp\":" + exp + ",\"iat\":" + now + "}";
         try {
-            final long now = System.currentTimeMillis() / 1000L;
-            final long exp = now + 3600;
-            final String claim = "{\"iss\":\"" + client_id + "\",\"scope\":\"" + SCOPE + "\",\"aud\":\"https://accounts.google.com/o/oauth2/token\",\"exp\":" + exp + ",\"iat\":" + now + "}";
-
             final String jwt = Base64.encodeBase64URLSafeString(jwt_header.getBytes()) + "." + Base64.encodeBase64URLSafeString(claim.getBytes("UTF-8"));
-
             final byte[] jwt_data = jwt.getBytes("UTF8");
-
             final Signature sig = Signature.getInstance("SHA256WithRSA");
 
             final KeyStore ks = java.security.KeyStore.getInstance("PKCS12");
@@ -99,9 +108,7 @@ public class GoogleCalendarAuth {
             final String b64sig = Base64.encodeBase64URLSafeString(signatureBytes);
 
             final String assertion = jwt + "." + b64sig;
-
             //System.out.println("Assertion: " + assertion);
-
             final String data = "grant_type=assertion" +
                "&" + "assertion_type" + "=" + URLEncoder.encode("http://oauth.net/grant_type/jwt/1.0/bearer", "UTF-8") +
                "&" + "assertion=" + URLEncoder.encode(assertion, "UTF-8");
