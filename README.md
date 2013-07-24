@@ -11,7 +11,6 @@ Run as a console app this way:
 where:
 
  - `MyPKCS12` is a PKCS12 keystore file.
-
  - `CLIENT_ID` is the assigned Google client ID.
 
 
