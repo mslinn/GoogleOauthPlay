@@ -22,11 +22,11 @@ where:
  1. In the [Google APIs Access page](https://code.google.com/apis/console/?pli=1#project:552677350300:access),
  click the button titled **Create a new client ID...** and:
 
-  a. Select Service account
+  a. Select **Service account**.
 
-  b. Click **Create client ID**.
+  b. Click **Create client ID**. The following message appears. I can't figure out how to change the password:
 
- Your private key's password is `notasecret`. You must present this passowrd to use the key. There is only one copy of this key.
+> Your private key's password is `notasecret`. You must present this passowrd to use the key. There is only one copy of this key.
  You are responsible for downloading it and storing it securely. Click **Download private key** and save it with the name **googleKey.p12**.
 
   c. Click **Create new Server key...** and leave the `Accept requests from these server IP addresses` blank, then click **Create**.
