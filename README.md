@@ -39,8 +39,9 @@ where:
 ### Run as a Local Play app ###
  2. Set environment variables for the key and client id shown on the same Google API page:
 
-    `export GOOGLE_APP_KEY=blahblahblah`
-    `export GOOGLE_CLIENT_ID=123456.apps.googleusercontent.com`
+
+    export GOOGLE_APP_KEY=blahblahblah
+    export GOOGLE_CLIENT_ID=123456.apps.googleusercontent.com
 
  3. Run Play:
 
@@ -51,10 +52,12 @@ where:
 
  2. Set environment variables for the key and client id shown on the same Google API page:
 
-    `heroku config:add GOOGLE_APP_KEY=blahblahblah --app gcalauth`
-    `heroku config:add GOOGLE_CLIENT_ID=123456.apps.googleusercontent.com --app gcalauth`
+
+    heroku config:add GOOGLE_APP_KEY=blahblahblah --app gcalauth
+    heroku config:add GOOGLE_CLIENT_ID=123456.apps.googleusercontent.com --app gcalauth
 
  3. Run on Heroku:
 
-    `git remote add heroku git@heroku.com:gcalauth.git`
-    `git push heroku master`
+
+    git remote add heroku git@heroku.com:gcalauth.git
+    git push heroku master
