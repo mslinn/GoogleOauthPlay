@@ -17,8 +17,8 @@
 > Your private key's password is `notasecret`. You must present this password to use the key. There is only one copy of this key.
  You are responsible for downloading it and storing it securely. Click **Download private key** and save it with the name **googleKey.p12**.
 
-  c. Click **Create new Server key...** and leave the `Accept requests from these server IP addresses` blank, then click **Create**.
-     Take note of the API key that is created, which can work with any IP address.
+  c. Our service needs to access user data, and access via API keys created by **Simple API Access** cannot do that, so ignore this section.
+  Do not create a server key, a browser key, and Android key or an iOS key.
 
   d. TODO figure out how to have the application request delegated access to the resources for creating and querying calendar appointments.
 

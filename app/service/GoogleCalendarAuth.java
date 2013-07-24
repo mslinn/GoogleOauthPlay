@@ -57,6 +57,7 @@ import java.security.Signature;
  * <p/>
  * This code is not supported by Google */
 public class GoogleCalendarAuth {
+    // This enables authentication for two scopes. Is the 2nd scope actually required?
     private final String SCOPE = "https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/structuredcontent";
     private final String jwt_header = "{\"alg\":\"RS256\",\"typ\":\"JWT\"}";
     private String access_token = null;
