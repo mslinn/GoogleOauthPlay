@@ -42,6 +42,7 @@ import java.security.Signature;
  * NTP server.
  * <p/>
  * REFERENCE :
+ * https://code.google.com/apis/console/
  * https://developers.google.com/google-apps/calendar/v3/reference/calendars/get
  * https://developers.google.com/commerce-search/docs/shopping_auth
  * https://developers.google.com/accounts/docs/OAuth2ServiceAccount
@@ -124,7 +125,6 @@ public class GoogleCalendarAuth {
                 wr.write(data);
                 wr.flush();
 
-                /* java.io.IOException: Server returned HTTP response code: 400 for URL: https://accounts.google.com/o/oauth2/token */
                 BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 String line;
                 while ((line = rd.readLine()) != null) {

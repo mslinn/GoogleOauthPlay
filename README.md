@@ -26,20 +26,19 @@
 
 ## Run as a console app ##
 
-    $ sbt "run-main service.GoogleCalendarAuth --key=conf/googleKey.p12 --client_id=$GOOGLE_CLIENT_ID"
+    $ sbt "run-main service.GoogleCalendarAuth --key=conf/googleKey.p12 --client_id=$GOOGLE_CLIENT_EMAIL"
 
 where:
 
  - `conf/googleKey.p12` is a PKCS12 keystore file generated as described in the previous section.
- - `$GOOGLE_CLIENT_ID` is the assigned Google client ID from the the previous section.
-
+ - `$GOOGLE_CLIENT_EMAIL` is the assigned Google client ID email from the the previous section, of the form `123456789012-akwlekfjlekfjselfislefjlskejfsel@developer.gserviceaccount.com`
 
 ## Run as a Local Play app ##
  2. Set environment variables for the key and client id shown on the same Google API page:
 
     `export GOOGLE_APP_KEY=blahblahblah`
 
-    `export GOOGLE_CLIENT_ID=123456.apps.googleusercontent.com`
+    `export GOOGLE_CLIENT_EMAIL=123456.apps.googleusercontent.com`
 
  3. Run Play:
 
