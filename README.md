@@ -1,4 +1,9 @@
 # Server-to-Server GoogleCalendarAuth #
+
+This project works as a console app, but when I discovered that services cannot modify user's Google Calendars without the users being part of an Google administered domain I abandoned this project. The project has the structure of a Play Framework app, but was not implemented that way.
+
+## Background ##
+
 [Sample program](src/main/java/GoogleCalendarAuth.java) taken from
 [GoogleCalendarAuth.java](https://code.google.com/p/gcs-admin-toolkit/source/browse/trunk/src/auth/GoogleCalendarAuth.java)
 
@@ -6,6 +11,8 @@
 
 [Read Google's docs on how this works.](https://developers.google.com/accounts/docs/OAuth2#serviceaccount) and also
 [Java API docs on Service Accounts](https://code.google.com/p/google-api-java-client/wiki/OAuth2#Service_Accounts).
+
+## Setting up ##
 
  1. In the [Google APIs Access page](https://code.google.com/apis/console/?pli=1#project:552677350300:access),
  click the button titled **Create a new client ID...** and:
@@ -19,10 +26,6 @@
 
   c. Our service needs to access user data, and access via API keys created by **Simple API Access** cannot do that, so ignore this section.
   Do not create a server key, a browser key, and Android key or an iOS key.
-
-  d. TODO figure out how to have the application request delegated access to the resources for creating and querying calendar appointments.
-
-  e. Should We **Enable notification endpoints**???
 
 ## Run as a console app ##
 
@@ -46,6 +49,8 @@ where:
 
 
 ## Run as a Play app on Heroku ##
+
+Not implemented
 
  2. Set environment variables for the key and client id shown on the same Google API page:
 

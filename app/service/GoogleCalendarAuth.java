@@ -32,7 +32,7 @@ import java.security.PrivateKey;
 import java.security.Signature;
 
 /**
- * @see https://gcs-admin-toolkit.googlecode.com/svn/trunk/src/auth/GCS_Auth.java
+ * Taken from https://gcs-admin-toolkit.googlecode.com/svn/trunk/src/auth/GCS_Auth.java
  *
  * This script acquires an oauth2 bearer access_token use with authenticated GCS
  * ShoppingAPI and ContentAPI requests.  GCS customers should use one of the
@@ -100,7 +100,7 @@ public class GoogleCalendarAuth {
                               "\"scope\":\"" + SCOPE + "\"," +
                               "\"aud\":\"https://accounts.google.com/o/oauth2/token\"," +
                               "\"exp\":" + exp + "," +
-                           // "\"prn\":\"some.user@somecorp.com\"," + // Does this require some.user to have their email served from a googlemail domain?
+                           // "\"prn\":\"some.user@somecorp.com\"," + // This require some.user to have their email served from a googlemail domain?
                               "\"iat\":" + now + "}";
         try {
             final String jwt = Base64.encodeBase64URLSafeString(jwt_header.getBytes()) + "." + Base64.encodeBase64URLSafeString(claim.getBytes("UTF-8"));
@@ -156,4 +156,3 @@ public class GoogleCalendarAuth {
         }
     }
 }
-
