@@ -50,7 +50,7 @@ import java.security.Signature;
  * <p/>
  * javac -cp .:commons-codec-1.6.jar GCS_Auth.java
  * <p/>
- * java -cp .:commons-codec-1.6.jar GCS_Auth --client_id= --key=
+ * java -cp .:commons-codec-1.6.jar GCS_Auth --client_id=funnyEmailHere --key=blahblahblah
  * <p/>
  * client_id=<clientID Service account 'email'>
  * key = <private key for the service account>
@@ -96,7 +96,11 @@ public class GoogleCalendarAuth {
         final long now = System.currentTimeMillis() / 1000L;
         final long exp = now + 3600;
         final char[] password = "notasecret".toCharArray();
-        final String claim = "{\"iss\":\"" + client_id + "\",\"scope\":\"" + SCOPE + "\",\"aud\":\"https://accounts.google.com/o/oauth2/token\",\"exp\":" + exp + ",\"iat\":" + now + "}";
+        final String claim = "{\"iss\":\"" + client_id + "\"," +
+                              "\"scope\":\"" + SCOPE + "\"," +
+                              "\"aud\":\"https://accounts.google.com/o/oauth2/token\"," +
+                              "\"exp\":" + exp + "," +
+                              "\"iat\":" + now + "}";
         try {
             final String jwt = Base64.encodeBase64URLSafeString(jwt_header.getBytes()) + "." + Base64.encodeBase64URLSafeString(claim.getBytes("UTF-8"));
             final byte[] jwt_data = jwt.getBytes("UTF8");
