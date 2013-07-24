@@ -100,6 +100,7 @@ public class GoogleCalendarAuth {
                               "\"scope\":\"" + SCOPE + "\"," +
                               "\"aud\":\"https://accounts.google.com/o/oauth2/token\"," +
                               "\"exp\":" + exp + "," +
+                           // "\"prn\":\"some.user@somecorp.com\"," + // Does this require some.user to have their email served from a googlemail domain?
                               "\"iat\":" + now + "}";
         try {
             final String jwt = Base64.encodeBase64URLSafeString(jwt_header.getBytes()) + "." + Base64.encodeBase64URLSafeString(claim.getBytes("UTF-8"));
