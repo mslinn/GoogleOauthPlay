@@ -41,6 +41,7 @@ import java.security.Signature;
  * NTP server.
  * <p/>
  * REFERENCE :
+ * https://developers.google.com/google-apps/calendar/v3/reference/calendars/get
  * https://developers.google.com/commerce-search/docs/shopping_auth
  * https://developers.google.com/accounts/docs/OAuth2ServiceAccount
  * http://code.google.com/p/google-api-java-client/wiki/OAuth2
@@ -54,6 +55,8 @@ import java.security.Signature;
  * <p/>
  * This code is not supported by Google */
 public class GoogleCalendarAuth {
+    private final String SCOPE = "https://www.googleapis.com/auth/calendar" + " " + "https://www.googleapis.com/auth/structuredcontent";
+    private  String jwt_header = "{\"alg\":\"RS256\",\"typ\":\"JWT\"}";
     private String access_token = null;
 
     public static void main(String[] args) {
@@ -76,11 +79,7 @@ public class GoogleCalendarAuth {
     }
 
     public GoogleCalendarAuth(String client_id, String key) {
-        String SCOPE = "https://www.googleapis.com/auth/shoppingapi";
-        SCOPE = SCOPE + " " + "https://www.googleapis.com/auth/structuredcontent";
         try {
-            String jwt_header = "{\"alg\":\"RS256\",\"typ\":\"JWT\"}";
-
             long now = System.currentTimeMillis() / 1000L;
             long exp = now + 3600;
             String claim = "{\"iss\":\"" + client_id + "\",\"scope\":\"" + SCOPE + "\",\"aud\":\"https://accounts.google.com/o/oauth2/token\",\"exp\":" + exp + ",\"iat\":" + now + "}";
@@ -107,6 +106,7 @@ public class GoogleCalendarAuth {
             data += "&" + "assertion_type" + "=" + URLEncoder.encode("http://oauth.net/grant_type/jwt/1.0/bearer", "UTF-8");
             data += "&" + "assertion=" + URLEncoder.encode(assertion, "UTF-8");
 
+            // Make the Access Token Request
             URLConnection conn = null;
             try {
                 URL url = new URL("https://accounts.google.com/o/oauth2/token");
